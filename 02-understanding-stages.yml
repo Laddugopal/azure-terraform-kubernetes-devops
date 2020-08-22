@@ -19,9 +19,9 @@ stages:
     steps:
     - bash: echo Build secondJOb!
 - stage: DevDeploy
-  dependsOn: Build
   variables:
     environment: Dev
+  dependsOn: Build
   jobs:
   - job: FirstJob
     steps:
@@ -30,9 +30,9 @@ stages:
     steps:
     - bash: echo ${environment} secondJOb!
 - stage: QADeploy
-  dependsOn: Build
   variables:
     environment: QA
+  dependsOn: Build
   jobs:
   - job: FirstJob
     steps:
@@ -41,11 +41,11 @@ stages:
     steps:
     - bash: echo ${environment} secondJOb!
 - stage: PreprodDeploy
+  variables:
+    environment: Preprod
   dependsOn:
   - DevDeploy
   - QADeploy
-  variables:
-    environment: Preprod
   jobs:
   - job: FirstJob
     steps:
@@ -54,9 +54,9 @@ stages:
     steps:
     - bash: echo ${environment} secondJOb!
 - stage: ProdDeploy
-  dependsOn: PreprodDeploy
   variables:
     environment: Prod
+  dependsOn: PreprodDeploy
   jobs:
   - job: FirstJob
     steps:
