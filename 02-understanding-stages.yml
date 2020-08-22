@@ -13,41 +13,54 @@ stages:
   jobs:
   - job: FirstJob
     steps:
-    - script: echo Build FirstJOb!
+    - bash: echo Build FirstJOb!
+    - bash: echo $(PipelineLevelVariable)
   - job: secondJob
     steps:
-    - script: echo Build secondJOb!
+    - bash: echo Build secondJOb!
 - stage: DevDeploy
   dependsOn: Build
+  variables:
+    environment: Dev
   jobs:
   - job: FirstJob
     steps:
-    - script: echo Dev FirstJOb!
+    - bash: echo ${environment} FirstJOb!
   - job: secondJob
     steps:
-    - script: echo Dev secondJOb!
+    - bash: echo ${environment} secondJOb!
 - stage: QADeploy
   dependsOn: Build
+  variables:
+    environment: QA
   jobs:
   - job: FirstJob
     steps:
-    - script: echo QA FirstJOb!
+    - bash: echo ${environment} FirstJOb!
   - job: secondJob
     steps:
-    - script: echo QA secondJOb!
+    - bash: echo ${environment} secondJOb!
 - stage: PreprodDeploy
+  dependsOn:
+  - DevDeploy
+  - QADeploy
+  variables:
+    environment: Preprod
   jobs:
   - job: FirstJob
     steps:
-    - script: echo PreProd FirstJOb!
+    - bash: echo ${environment} FirstJOb!
   - job: secondJob
     steps:
-    - script: echo PreProd secondJOb!
+    - bash: echo ${environment} secondJOb!
 - stage: ProdDeploy
+  dependsOn: PreprodDeploy
+  variables:
+    environment: Prod
   jobs:
   - job: FirstJob
     steps:
-    - script: echo Prod FirstJOb!
+    - bash: echo ${environment} FirstJOb!
   - job: secondJob
     steps:
-    - script: echo Prod secondJOb!
+    - bash: echo ${environment} secondJOb!
