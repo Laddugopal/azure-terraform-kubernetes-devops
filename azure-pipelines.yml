@@ -10,9 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 jobs:
-- job: First Job
+- job: FirstJob
   steps:
   - script: echo Hare Krishna Hare Ram!!!
-- job: Second job
+- job: Secondjob
   steps:
   - script: echo Radhe Shyam!!!
