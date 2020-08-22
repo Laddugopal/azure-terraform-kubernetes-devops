@@ -14,5 +14,10 @@ jobs:
   steps:
   - script: echo Hare Krishna Hare Ram!!!
 - job: Secondjob
+  dependsOn: Firstjob
   steps:
-  - script: echo Radhe Shyam!!!
+  - script: echo Shree Radhe Shyam!!!
+- job: Thirdjob
+  dependsOn: Secondjob
+  steps:
+  - script: echo Shree Sita Ram!!!
